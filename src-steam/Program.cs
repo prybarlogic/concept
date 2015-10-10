@@ -3,6 +3,8 @@
     using System;
     using System.Linq;
     using System.Threading;
+    using System.Net;
+    using System.Diagnostics;
 
     using TerraPanel.Concept.Commands;
 
@@ -121,17 +123,42 @@
 
         #region Commands
 
+        // TODO
+        // - Download SteamCMD if it doesn't already exist
+        // - Run SteamCMD to install or update/validate rust
+
         private static void InstallGame(string gameName)
         {
             WriteInfo($"Searching TGD for '{gameName}' ...");
             Thread.Sleep(200);
             WriteInfo($"Game server '{gameName}' found in TGD!");
             Thread.Sleep(200);
-            WriteInfo($"Downloading SteamCMD to C:\\TerraPanel\\Games ... for '{gameName}'...");
+            WriteInfo($"Downloading SteamCMD for '{gameName}' successfull ...");
+
+            //Download SteamCMD + placing it in the correct folder.
+            string url = @"https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
+            WebClient client = new WebClient();
+            client.DownloadFileAsync(new Uri(url), @"D:\TerraGaming\steamcmd\steamcmd.zip");
+            //End
+   
             Thread.Sleep(200);
-            WriteInfo($"Downloading SteamCMD for '{gameName}' successfull...");
-            Thread.Sleep(200);
-            WriteInfo($"Downloading {gameName} server via SteamCMD to C:\\TerraPanel\\Games ...");
+            WriteInfo($"Downloading {gameName} server via SteamCMD to D:\\TerraGaming\\rust ...");
+
+            //Starting SteamCMD + Downloading Rust Server Files.
+            Process p = new Process();
+            p.StartInfo.FileName = @"D:\TerraGaming\steamcmd\steamcmd.exe";
+            p.StartInfo.Arguments = @"/c +login anonymous +force_install_dir D:\TerraGaming\rust +app_update 258550 -beta experimental validate +quit";
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.Start();
+            string output = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+            Console.WriteLine();
+            WriteSuccess($"Download {gameName} server complete!");
+            Console.WriteLine();
+            //End
+
+            //Continue
             Thread.Sleep(5500);
             WriteInfo("Installing server ...");
             Thread.Sleep(1500);
@@ -142,7 +169,7 @@
             Console.WriteLine();
             WriteSuccess("Install complete!");
             Console.WriteLine();
-            WriteInfo($"File path: C:\\TerraPanel\\Games\\{gameName}\\");
+            WriteInfo($"File path: D:\\TerraGaming\\{gameName}\\");
             WriteInfo($"Use 'start {gameName}' to start the server");
         }
 
