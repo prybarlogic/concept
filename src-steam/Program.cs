@@ -140,23 +140,49 @@
             WebClient client = new WebClient();
             client.DownloadFileAsync(new Uri(url), @"D:\TerraGaming\steamcmd\steamcmd.zip");
             //End
-   
-            Thread.Sleep(200);
-            WriteInfo($"Downloading {gameName} server via SteamCMD to D:\\TerraGaming\\rust ...");
 
-            //Starting SteamCMD + Downloading Rust Server Files.
-            Process p = new Process();
-            p.StartInfo.FileName = @"D:\TerraGaming\steamcmd\steamcmd.exe";
-            p.StartInfo.Arguments = @"/c +login anonymous +force_install_dir D:\TerraGaming\rust +app_update 258550 -beta experimental validate +quit";
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.RedirectStandardOutput = true;
-            p.Start();
-            string output = p.StandardOutput.ReadToEnd();
-            p.WaitForExit();
-            Console.WriteLine();
-            WriteSuccess($"Download {gameName} server complete!");
-            Console.WriteLine();
+            if (gameName == "rust")
+            {
+                Thread.Sleep(200);
+                WriteInfo($"Downloading '{gameName}' server via SteamCMD to D:\\TerraGaming\\rustserver ...");
+
+                //Starting SteamCMD + Downloading Rust Server Files.
+                Process p = new Process();
+                p.StartInfo.FileName = @"D:\TerraGaming\steamcmd\steamcmd.exe";
+                p.StartInfo.Arguments = @"/c +login anonymous +force_install_dir D:\TerraGaming\rustserver +app_update 258550 -beta experimental validate +quit";
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.Start();
+                string output = p.StandardOutput.ReadToEnd();
+                p.WaitForExit();
+                Console.WriteLine();
+                WriteSuccess($"Download '{gameName}' server complete!");
+                Console.WriteLine();
+            }
             //End
+
+            else if (gameName == "csgo")
+            {
+                Thread.Sleep(200);
+                WriteInfo($"Downloading '{gameName}' server via SteamCMD to D:\\TerraGaming\\csgoserver ...");
+
+                //Starting SteamCMD + Downloading Rust Server Files.
+                Process p = new Process();
+                p.StartInfo.FileName = @"D:\TerraGaming\steamcmd\steamcmd.exe";
+                p.StartInfo.Arguments = @"/c +login anonymous +force_install_dir D:\TerraGaming\csgoserver +app_update 740 validatee +quit";
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.Start();
+                string output = p.StandardOutput.ReadToEnd();
+                p.WaitForExit();
+                Console.WriteLine();
+                WriteSuccess($"Download '{gameName}' server complete!");
+                Console.WriteLine();
+            }
+            else
+            {
+                WriteInfo("Need to add ...");
+            }
 
             //Continue
             Thread.Sleep(5500);
