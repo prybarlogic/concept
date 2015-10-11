@@ -303,48 +303,69 @@
             //Rust Server
             if (gameName == "rust")
             {
-                WriteInfo($"Removing '{gameName}' ...");
-                WriteInfo("Game server is currently running - saving, then stopping ...");
-                Thread.Sleep(2500);
-                WriteInfo("Deleting files ...");
-                Directory.Delete(@"D:\TerraGaming\rustserver", true);
-                Thread.Sleep(2500);
-                WriteInfo("Configuring firewall ...");
-                Thread.Sleep(500);
-                Console.WriteLine();
-                WriteSuccess("Uninstall complete!");
+                if (Directory.Exists(@"D:\TerraGaming\rustserver"))
+                {
+                    WriteInfo($"Removing '{gameName}' ...");
+                    WriteInfo("Game server is currently running - saving, then stopping ...");
+                    Thread.Sleep(2500);
+                    WriteInfo("Deleting files ...");
+                    Directory.Delete(@"D:\TerraGaming\rustserver", true);
+                    Thread.Sleep(2500);
+                    WriteInfo("Configuring firewall ...");
+                    Thread.Sleep(500);
+                    Console.WriteLine();
+                    WriteSuccess("Uninstall complete!");
+                }
+                else
+                {
+                    WriteInfo("Server not installed!");
+                }
             }
             //CSGO Server
             else if (gameName == "csgo")
             {
-                WriteInfo($"Removing '{gameName}' ...");
-                WriteInfo("Game server is currently running - saving, then stopping ...");
-                Thread.Sleep(2500);
-                WriteInfo("Deleting files ...");
-                Directory.Delete(@"D:\TerraGaming\csgoserver", true);
-                Thread.Sleep(2500);
-                WriteInfo("Configuring firewall ...");
-                Thread.Sleep(500);
-                Console.WriteLine();
-                WriteSuccess("Uninstall complete!");
+                if (Directory.Exists(@"D:\TerraGaming\csgoserver"))
+                {
+                    WriteInfo($"Removing '{gameName}' ...");
+                    WriteInfo("Game server is currently running - saving, then stopping ...");
+                    Thread.Sleep(2500);
+                    WriteInfo("Deleting files ...");
+                    Directory.Delete(@"D:\TerraGaming\csgoserver", true);
+                    Thread.Sleep(2500);
+                    WriteInfo("Configuring firewall ...");
+                    Thread.Sleep(500);
+                    Console.WriteLine();
+                    WriteSuccess("Uninstall complete!");
+                }
+                else
+                {
+                    WriteInfo("Server not installed!");
+                }
             }
             //Arma3 Server
             else if (gameName == "arma3")
             {
-                WriteInfo($"Removing '{gameName}' ...");
-                WriteInfo("Game server is currently running - saving, then stopping ...");
-                Thread.Sleep(2500);
-                WriteInfo("Deleting files ...");
-                Directory.Delete(@"D:\TerraGaming\arma3server", true);
-                Thread.Sleep(2500);
-                WriteInfo("Configuring firewall ...");
-                Thread.Sleep(500);
-                Console.WriteLine();
-                WriteSuccess("Uninstall complete!");
+                if (Directory.Exists(@"D:\TerraGaming\csgoserver"))
+                {
+                    WriteInfo($"Removing '{gameName}' ...");
+                    WriteInfo("Game server is currently running - saving, then stopping ...");
+                    Thread.Sleep(2500);
+                    WriteInfo("Deleting files ...");
+                    Directory.Delete(@"D:\TerraGaming\arma3server", true);
+                    Thread.Sleep(2500);
+                    WriteInfo("Configuring firewall ...");
+                    Thread.Sleep(500);
+                    Console.WriteLine();
+                    WriteSuccess("Uninstall complete!");
+                }
+                else
+                {
+                    WriteInfo("Server not installed!");
+                }
             }
             else
             {
-                WriteInfo("This server is not installed.");
+                WriteInfo("Server not installed.");
             }
 
         }
