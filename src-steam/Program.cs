@@ -5,6 +5,7 @@
     using System.Threading;
     using System.Net;
     using System.Diagnostics;
+    using System.IO;
 
     using TerraPanel.Concept.Commands;
 
@@ -129,24 +130,25 @@
 
         private static void InstallGame(string gameName)
         {
-            WriteInfo($"Searching TGD for '{gameName}' ...");
-            Thread.Sleep(200);
-            WriteInfo($"Game server '{gameName}' found in TGD!");
-            Thread.Sleep(200);
-            WriteInfo($"Downloading SteamCMD for '{gameName}' successfull ...");
-
-            //Download SteamCMD + placing it in the correct folder.
-            string url = @"https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
-            WebClient client = new WebClient();
-            client.DownloadFileAsync(new Uri(url), @"D:\TerraGaming\steamcmd\steamcmd.zip");
-            //End
-
+            //Rust Server
             if (gameName == "rust")
             {
+                //Searching TGD if game is supported
+                WriteInfo($"Searching TGD for '{gameName}' ...");
                 Thread.Sleep(200);
-                WriteInfo($"Downloading '{gameName}' server via SteamCMD to D:\\TerraGaming\\rustserver ...");
+                WriteInfo($"Game server '{gameName}' found in TGD!");
+                Thread.Sleep(200);
+                WriteInfo($"Downloading SteamCMD for '{gameName}' successfull ...");
+
+                //Download SteamCMD + placing it in the correct folder.
+                // TODO -- ADD UNZIP SUPPORT
+                string url = @"https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
+                WebClient client = new WebClient();
+                client.DownloadFileAsync(new Uri(url), @"D:\TerraGaming\steamcmd\steamcmd.zip");
+                Thread.Sleep(200);
 
                 //Starting SteamCMD + Downloading Rust Server Files.
+                WriteInfo($"Downloading '{gameName}' server via SteamCMD to D:\\TerraGaming\\rustserver.");
                 Process p = new Process();
                 p.StartInfo.FileName = @"D:\TerraGaming\steamcmd\steamcmd.exe";
                 p.StartInfo.Arguments = @"/c +login anonymous +force_install_dir D:\TerraGaming\rustserver +app_update 258550 -beta experimental validate +quit";
@@ -158,18 +160,45 @@
                 Console.WriteLine();
                 WriteSuccess($"Download '{gameName}' server complete!");
                 Console.WriteLine();
-            }
-            //End
 
+                //Continue
+                Thread.Sleep(5500);
+                WriteInfo("Installing server ...");
+                Thread.Sleep(1500);
+                WriteInfo("Setting up default configuration ...");
+                Thread.Sleep(500);
+                WriteInfo("Configuring firewall ...");
+                Thread.Sleep(500);
+                Console.WriteLine();
+                WriteSuccess("Install complete!");
+                Console.WriteLine();
+                WriteInfo($"File path: D:\\TerraGaming\\{gameName}server\\");
+                WriteInfo($"Use 'start {gameName}' to start the server");
+            }
+            //End Rust Server
+
+            //CSGO Server
             else if (gameName == "csgo")
             {
+                //Searching TGD if game is supported
+                WriteInfo($"Searching TGD for '{gameName}' ...");
                 Thread.Sleep(200);
-                WriteInfo($"Downloading '{gameName}' server via SteamCMD to D:\\TerraGaming\\csgoserver ...");
+                WriteInfo($"Game server '{gameName}' found in TGD!");
+                Thread.Sleep(200);
+                WriteInfo($"Downloading SteamCMD for '{gameName}' successfull ...");
 
-                //Starting SteamCMD + Downloading Rust Server Files.
+                //Download SteamCMD + placing it in the correct folder.
+                // TODO -- ADD UNZIP SUPPORT
+                string url = @"https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
+                WebClient client = new WebClient();
+                client.DownloadFileAsync(new Uri(url), @"D:\TerraGaming\steamcmd\steamcmd.zip");
+                Thread.Sleep(200);
+
+                //Starting SteamCMD + Downloading CSGO Server Files.
+                WriteInfo($"Downloading '{gameName}' server via SteamCMD to D:\\TerraGaming\\csgoserver.");
                 Process p = new Process();
                 p.StartInfo.FileName = @"D:\TerraGaming\steamcmd\steamcmd.exe";
-                p.StartInfo.Arguments = @"/c +login anonymous +force_install_dir D:\TerraGaming\csgoserver +app_update 740 validatee +quit";
+                p.StartInfo.Arguments = @"/c +login anonymous +force_install_dir D:\TerraGaming\csgoserver +app_update 740 validate +quit";
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.RedirectStandardOutput = true;
                 p.Start();
@@ -178,25 +207,79 @@
                 Console.WriteLine();
                 WriteSuccess($"Download '{gameName}' server complete!");
                 Console.WriteLine();
+
+                //Continue
+                Thread.Sleep(5500);
+                WriteInfo("Installing server ...");
+                Thread.Sleep(1500);
+                WriteInfo("Setting up default configuration ...");
+                Thread.Sleep(500);
+                WriteInfo("Configuring firewall ...");
+                Thread.Sleep(500);
+                Console.WriteLine();
+                WriteSuccess("Install complete!");
+                Console.WriteLine();
+                WriteInfo($"File path: D:\\TerraGaming\\{gameName}server\\");
+                WriteInfo($"Use 'start {gameName}' to start the server");
             }
+            //End CSGO Server
+
+            //Arma3 Server
+            else if (gameName == "arma3")
+            {
+                //Searching TGD if game is supported
+                WriteInfo($"Searching TGD for '{gameName}' ...");
+                Thread.Sleep(200);
+                WriteInfo($"Game server '{gameName}' found in TGD!");
+                Thread.Sleep(200);
+                WriteInfo($"Downloading SteamCMD for '{gameName}' successfull ...");
+
+                //Download SteamCMD + placing it in the correct folder.
+                // TODO -- ADD UNZIP SUPPORT
+                string url = @"https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip";
+                WebClient client = new WebClient();
+                client.DownloadFileAsync(new Uri(url), @"D:\TerraGaming\steamcmd\steamcmd.zip");
+                Thread.Sleep(200);
+
+                //Starting SteamCMD + Downloading Arma3 Server Files.
+                WriteInfo($"Downloading '{gameName}' server via SteamCMD to D:\\TerraGaming\\arma3server.");
+                Process p = new Process();
+                p.StartInfo.FileName = @"D:\TerraGaming\steamcmd\steamcmd.exe";
+                p.StartInfo.Arguments = @"/c +login anonymous +force_install_dir D:\TerraGaming\arma3server +app_update 233780 -beta validate +quit";
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.Start();
+                string output = p.StandardOutput.ReadToEnd();
+                p.WaitForExit();
+                Console.WriteLine();
+                WriteSuccess($"Download '{gameName}' server complete!");
+                Console.WriteLine();
+                //Continue
+                Thread.Sleep(5500);
+                WriteInfo("Installing server ...");
+                Thread.Sleep(1500);
+                WriteInfo("Setting up default configuration ...");
+                Thread.Sleep(500);
+                WriteInfo("Configuring firewall ...");
+                Thread.Sleep(500);
+                Console.WriteLine();
+                WriteSuccess("Install complete!");
+                Console.WriteLine();
+                WriteInfo($"File path: D:\\TerraGaming\\{gameName}server\\");
+                WriteInfo($"Use 'start {gameName}' to start the server");
+            }
+            //End ARMA3 Server
             else
             {
-                WriteInfo("Need to add ...");
+                //Searching TGD if game is supported
+                WriteInfo($"Searching TGD for '{gameName}' ...");
+                Thread.Sleep(200);
+                //When game is not supported
+                WriteInfo($"Game server '{gameName}' not found in TGD!");
+                Thread.Sleep(200);
+                WriteInfo("Please use the install command with the following games.");
+                WriteInfo("rust, csgo or arma3.");
             }
-
-            //Continue
-            Thread.Sleep(5500);
-            WriteInfo("Installing server ...");
-            Thread.Sleep(1500);
-            WriteInfo("Setting up default configuration ...");
-            Thread.Sleep(500);
-            WriteInfo("Configuring firewall ...");
-            Thread.Sleep(500);
-            Console.WriteLine();
-            WriteSuccess("Install complete!");
-            Console.WriteLine();
-            WriteInfo($"File path: D:\\TerraGaming\\{gameName}\\");
-            WriteInfo($"Use 'start {gameName}' to start the server");
         }
 
         private static void UpdateGame(string gameName)
@@ -217,15 +300,53 @@
 
         private static void RemoveGame(string gameName)
         {
-            WriteInfo($"Removing '{gameName}' ...");
-            WriteInfo("Game server is currently running - saving, then stopping ...");
-            Thread.Sleep(2500);
-            WriteInfo("Deleting files ...");
-            Thread.Sleep(2500);
-            WriteInfo("Configuring firewall ...");
-            Thread.Sleep(500);
-            Console.WriteLine();
-            WriteSuccess("Uninstall complete!");
+            //Rust Server
+            if (gameName == "rust")
+            {
+                WriteInfo($"Removing '{gameName}' ...");
+                WriteInfo("Game server is currently running - saving, then stopping ...");
+                Thread.Sleep(2500);
+                WriteInfo("Deleting files ...");
+                Directory.Delete(@"D:\TerraGaming\rustserver", true);
+                Thread.Sleep(2500);
+                WriteInfo("Configuring firewall ...");
+                Thread.Sleep(500);
+                Console.WriteLine();
+                WriteSuccess("Uninstall complete!");
+            }
+            //CSGO Server
+            else if (gameName == "csgo")
+            {
+                WriteInfo($"Removing '{gameName}' ...");
+                WriteInfo("Game server is currently running - saving, then stopping ...");
+                Thread.Sleep(2500);
+                WriteInfo("Deleting files ...");
+                Directory.Delete(@"D:\TerraGaming\csgoserver", true);
+                Thread.Sleep(2500);
+                WriteInfo("Configuring firewall ...");
+                Thread.Sleep(500);
+                Console.WriteLine();
+                WriteSuccess("Uninstall complete!");
+            }
+            //Arma3 Server
+            else if (gameName == "arma3")
+            {
+                WriteInfo($"Removing '{gameName}' ...");
+                WriteInfo("Game server is currently running - saving, then stopping ...");
+                Thread.Sleep(2500);
+                WriteInfo("Deleting files ...");
+                Directory.Delete(@"D:\TerraGaming\arma3server", true);
+                Thread.Sleep(2500);
+                WriteInfo("Configuring firewall ...");
+                Thread.Sleep(500);
+                Console.WriteLine();
+                WriteSuccess("Uninstall complete!");
+            }
+            else
+            {
+                WriteInfo("This server is not installed.");
+            }
+
         }
 
 
